@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Query } from '@nestjs/common';
 import { PersonDto, UpdatePersonDto } from './person.dto';
 import { HelloService } from './hello.service';
 import { PersonRepository } from './person-repository.service';
@@ -6,7 +6,7 @@ import { PersonDocument } from './person.schema';
 
 interface ReturnMessage {
   message: string;
-  data?: PersonDocument | PersonDocument[];
+  data?: PersonDocument | PersonDocument[] | any;
 }
 
 @Controller('persons')
@@ -46,12 +46,33 @@ export class PersonsController {
     }
   }
 
-  @Patch(':id')
-  updateOne(
+  @Put(':id')
+  async replaceOne(
     @Param('id') id: string,
-    @Body() person: UpdatePersonDto): ReturnMessage {
+    @Body() person: PersonDto): Promise<ReturnMessage> {
+    return await this.updateOne(id, person);
+  }
+
+  @Patch(':id')
+  async updateOne(
+    @Param('id') id: string,
+    @Body() person: UpdatePersonDto
+  ): Promise<ReturnMessage> {
+    const updatedPerson = await this.personRepository.update(
+      id, person
+    );
     return {
-      message: `Mise à jour d'une personne dont l'id est ${id}`
+      message: 'Mise à jour ok',
+      data: updatedPerson?.toObject()//{...updatedPerson, ...person}
     }
   }
+
+  @Delete(':id')
+  async remove(@Param('id') id: string): Promise<ReturnMessage> {
+    await this.personRepository.deleteOne(id);
+    return {
+      message: `Suppression de la personne dont l'id est ${id}`
+    }
+  }
+
 }

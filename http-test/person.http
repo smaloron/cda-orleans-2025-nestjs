@@ -10,8 +10,36 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "firstName": "René",
-  "lastName": "Descartes",
+  "firstName": "Emmanuel",
+  "lastName": "Kant",
   "age": 33,
-  "jobTitle": "Mathématicien"
+  "jobTitle": "Philosophe"
 }
+
+### Modification partielle
+
+
+PATCH localhost:3000/persons/67bf3864bdafe60cbbff9267
+Accept: application/json
+Content-Type: application/json
+
+{
+  "firstName": "Alceste",
+  "age": 18
+}
+
+### Remplacement
+PUT localhost:3000/persons/67bf3864bdafe60cbbff9267
+Accept: application/json
+Content-Type: application/json
+
+{
+  "lastName": "Martin",
+  "firstName": "Alceste",
+  "age": 18
+}
+
+### Suppression
+
+DELETE localhost:3000/persons/67c03eafc650f1c3ff99a4c6
+Accept: application/json

@@ -10,7 +10,7 @@ export class PersonDto{
   @MinLength(2, {message: 'deux caractères minimum'})
   firstName: string;
 
-  @IsNotEmpty({message:'Le prénom ne peut être vide'})
+  @IsNotEmpty({message:'Le nom de famille ne peut être vide'})
   @MinLength(2, {message: 'deux caractères minimum'})
   lastName: string;
 
