@@ -1,16 +1,32 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, Query } from '@nestjs/common';
+import { PersonDto, UpdatePersonDto } from './person.dto';
+import { HelloService } from './hello.service';
+import { PersonRepository } from './person-repository.service';
+import { PersonDocument } from './person.schema';
 
 interface ReturnMessage {
   message: string;
+  data?: PersonDocument | PersonDocument[];
 }
 
 @Controller('persons')
 export class PersonsController {
 
+  constructor(
+    private helloService: HelloService,
+    private personRepository: PersonRepository,
+  ){}
+
   @Get()
-  getAll(@Query('page') page: number = 1): ReturnMessage{
+  async getAll(
+    @Query('page') page: number = 1
+  ): Promise<ReturnMessage>
+  {
+    const persons: PersonDocument[] = await this.personRepository
+                                                .findAll();
     return {
-      message: `Toutes les personnes page= ${page} ${typeof page}`
+      message: ``,
+      data: persons
     };
   }
 
@@ -22,9 +38,20 @@ export class PersonsController {
   }
 
   @Post()
-  insertOne(@Body() person: {name: string}): ReturnMessage {
+  async insertOne(@Body() personDto: PersonDto): Promise<ReturnMessage> {
+    const person = await this.personRepository.save(personDto);
     return {
-      message: `Personne dont le nom est ${person.name}`
+      message: `Personne dont le nom est ${person._id}`,
+      data: person
+    }
+  }
+
+  @Patch(':id')
+  updateOne(
+    @Param('id') id: string,
+    @Body() person: UpdatePersonDto): ReturnMessage {
+    return {
+      message: `Mise à jour d'une personne dont l'id est ${id}`
     }
   }
 }

@@ -2,14 +2,19 @@ import {
   Controller,
   Get, Post, Put, Delete, Patch, Param, Query, Body,
 } from '@nestjs/common';
+import { HelloService } from '../persons/hello.service';
 
 @Controller('book')
 export class BookController {
 
+  constructor(
+    private helloService: HelloService
+  ){}
+
   @Get()
   getAllBooks() {
     return {
-      message: 'Book List',
+      message:  `book list ${this.helloService.greet('Albert')}`,
       data: []
     }
   }

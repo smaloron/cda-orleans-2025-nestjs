@@ -1,0 +1,17 @@
+### Liste de toutes les personnes
+
+GET http://localhost:3000/persons
+Accept: application/json
+
+### insertion d'une personne
+
+POST http://localhost:3000/persons
+Accept: application/json
+Content-Type: application/json
+
+{
+  "firstName": "René",
+  "lastName": "Descartes",
+  "age": 33,
+  "jobTitle": "Mathématicien"
+}
