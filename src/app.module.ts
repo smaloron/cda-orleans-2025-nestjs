@@ -7,6 +7,8 @@ import { HelloService } from './persons/hello.service';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { PersonsModule } from './persons/persons.module';
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
 
 
 @Module({
@@ -19,7 +21,9 @@ import { PersonsModule } from './persons/persons.module';
       process.env.MONGO_URI || 'mongodb://localhost:27017',
       { authSource: 'admin' }
     ),
-    PersonsModule
+    PersonsModule,
+    AuthModule,
+    UserModule
   ],
   controllers: [AppController],
   providers: [AppService, HelloService]

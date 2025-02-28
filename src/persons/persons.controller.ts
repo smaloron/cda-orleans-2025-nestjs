@@ -1,14 +1,16 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { PersonDto, UpdatePersonDto } from './person.dto';
 import { HelloService } from './hello.service';
 import { PersonRepository } from './person-repository.service';
 import { PersonDocument } from './person.schema';
+import { ApiKeyGuard } from '../api-key/api-key.guard';
 
 interface ReturnMessage {
   message: string;
   data?: PersonDocument | PersonDocument[] | any;
 }
 
+// @UseGuards(ApiKeyGuard)
 @Controller('persons')
 export class PersonsController {
 
