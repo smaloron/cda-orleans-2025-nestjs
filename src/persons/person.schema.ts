@@ -33,7 +33,7 @@ class Person {
   @Prop({
     required: false,
     type: MongooseSchema.Types.ObjectId,
-    ref: 'Address'}
+    ref: 'Addresses'}
   )
   address: Address;
 }

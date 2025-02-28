@@ -14,7 +14,7 @@ export class PersonRepository {
   ){}
 
   async findAll(): Promise<PersonDocument[]> {
-    return this.personModel.find();
+    return this.personModel.find().populate('address');
   }
 
   async save(personDto: PersonDto): Promise<PersonDocument> {
