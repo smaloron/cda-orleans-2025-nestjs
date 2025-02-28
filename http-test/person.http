@@ -13,7 +13,11 @@ Content-Type: application/json
   "firstName": "Emmanuel",
   "lastName": "Kant",
   "age": 33,
-  "jobTitle": "Philosophe"
+  "jobTitle": "Philosophe",
+  "address": {
+    "city" : "Lyon",
+    "zipCode": "69007"
+  }
 }
 
 ### Modification partielle

@@ -1,5 +1,19 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { Document, HydratedDocument, Schema as MongooseSchema } from 'mongoose';
+
+
+@Schema()
+export class Address extends Document {
+
+  @Prop({required: true})
+  city: string;
+
+  @Prop({required: true})
+  zipCode: string;
+}
+
+export const AddressSchema = SchemaFactory.createForClass(Address);
+
 
 @Schema()
 class Person {
@@ -15,6 +29,13 @@ class Person {
 
   @Prop()
   jobTitle: string;
+
+  @Prop({
+    required: false,
+    type: MongooseSchema.Types.ObjectId,
+    ref: 'Address'}
+  )
+  address: Address;
 }
 
 export type PersonDocument = HydratedDocument<Person>

@@ -1,5 +1,6 @@
 import { IsEmail, IsNotEmpty, IsNumber, IsOptional, MinLength } from 'class-validator';
 import { PartialType } from '@nestjs/mapped-types';
+import { Schema } from 'mongoose';
 
 export class PersonDto{
   @IsOptional()
@@ -20,6 +21,9 @@ export class PersonDto{
 
   @IsOptional()
   jobTitle: string;
+
+  @IsOptional()
+  address: {city: string, zipCode: string} | any;
 }
 
 export class UpdatePersonDto extends PartialType(PersonDto) {}
